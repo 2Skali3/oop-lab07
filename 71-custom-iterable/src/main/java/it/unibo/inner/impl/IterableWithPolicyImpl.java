@@ -1,0 +1,56 @@
+package it.unibo.inner.impl;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.function.Predicate;
+
+import it.unibo.inner.api.IterableWithPolicy;
+
+public class IterableWithPolicyImpl<T> implements IterableWithPolicy<T>{
+
+    private final T[] elements;
+    
+    public IterableWithPolicyImpl(T[] elements) {
+        this.elements = elements;
+    };
+
+    private class MyIterator implements Iterator<T>{
+        
+        int i = 0;
+
+        @Override
+        public boolean hasNext() {
+            if (i < elements.length){
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public T next() {
+            if(hasNext()){
+                T element = elements[i];
+                i++;
+                return element;
+            }
+            throw new NoSuchElementException();
+        }
+
+    }
+
+    
+
+    @Override
+    public Iterator<T> iterator() {
+        return new MyIterator();
+    }
+
+    @Override
+    public void setIterationPolicy(Predicate<T> filter) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setIterationPolicy'");
+    }
+
+    
+
+}
