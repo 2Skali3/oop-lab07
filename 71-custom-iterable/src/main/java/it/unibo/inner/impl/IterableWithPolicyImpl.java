@@ -38,8 +38,12 @@ public class IterableWithPolicyImpl<T> implements IterableWithPolicy<T>{
 
         @Override
         public boolean hasNext() {
-            if (i < elements.length){
-                return true;
+            while(i < elements.length){
+                T element = elements[i];
+                if(filter.test(element)){
+                    return true;
+                }
+                i++;
             }
             return false;
         }
