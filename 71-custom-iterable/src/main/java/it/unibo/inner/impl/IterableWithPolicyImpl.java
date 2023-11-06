@@ -27,10 +27,6 @@ public class IterableWithPolicyImpl<T> implements IterableWithPolicy<T>{
         this.elements = elements;
         this.filter = filter;
     };
-    
-
-    
-
 
     private class MyIterator implements Iterator<T>{
         
@@ -60,8 +56,6 @@ public class IterableWithPolicyImpl<T> implements IterableWithPolicy<T>{
 
     }
 
-    
-
     @Override
     public Iterator<T> iterator() {
         return new MyIterator();
@@ -71,7 +65,4 @@ public class IterableWithPolicyImpl<T> implements IterableWithPolicy<T>{
     public void setIterationPolicy(Predicate<T> filter) {
         this.filter = filter;
     }
-
-    
-
 }

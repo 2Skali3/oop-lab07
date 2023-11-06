@@ -1,0 +1,13 @@
+URL https://github.com/2Skali3/oop-lab07
+
+CLONE git@github.com:2Skali3/oop-lab07.git
+
+LAB 71-custom-iterable
+
+
+
+
+
+
+
+
