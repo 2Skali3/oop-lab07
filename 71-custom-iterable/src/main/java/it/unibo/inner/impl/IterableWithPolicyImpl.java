@@ -9,10 +9,28 @@ import it.unibo.inner.api.IterableWithPolicy;
 public class IterableWithPolicyImpl<T> implements IterableWithPolicy<T>{
 
     private final T[] elements;
-    
+    private Predicate<T> filter;
+
+
     public IterableWithPolicyImpl(T[] elements) {
+        this(
+            elements,
+            new Predicate<T>() {
+                @Override
+                public boolean test(T elem) {
+                    return true;
+                }
+            }
+        );
+    }
+    public IterableWithPolicyImpl(T[] elements, Predicate<T> filter) {
         this.elements = elements;
+        this.filter = filter;
     };
+    
+
+    
+
 
     private class MyIterator implements Iterator<T>{
         
@@ -47,8 +65,7 @@ public class IterableWithPolicyImpl<T> implements IterableWithPolicy<T>{
 
     @Override
     public void setIterationPolicy(Predicate<T> filter) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setIterationPolicy'");
+        this.filter = filter;
     }
 
     
