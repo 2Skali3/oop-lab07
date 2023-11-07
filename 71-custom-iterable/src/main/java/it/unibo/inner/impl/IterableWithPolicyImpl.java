@@ -1,6 +1,7 @@
 package it.unibo.inner.impl;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.function.Predicate;
 
@@ -8,23 +9,23 @@ import it.unibo.inner.api.IterableWithPolicy;
 
 public class IterableWithPolicyImpl<T> implements IterableWithPolicy<T>{
 
-    private final T[] elements;
+    private final List<T> elements;
     private Predicate<T> filter;
 
 
-    public IterableWithPolicyImpl(T[] elements) {
+    public IterableWithPolicyImpl(final T[] elements) {
         this(
             elements,
             new Predicate<T>() {
                 @Override
-                public boolean test(T elem) {
+                public final boolean test(final T elem) {
                     return true;
                 }
             }
         );
     }
-    public IterableWithPolicyImpl(T[] elements, Predicate<T> filter) {
-        this.elements = elements;
+    public IterableWithPolicyImpl(final T[] elements, final Predicate<T> filter) {
+        this.elements = List.of(elements);
         this.filter = filter;
     };
 
@@ -34,20 +35,14 @@ public class IterableWithPolicyImpl<T> implements IterableWithPolicy<T>{
 
         @Override
         public boolean hasNext() {
-            while(i < elements.length){
-                T element = elements[i];
-                if(filter.test(element)){
-                    return true;
-                }
-                i++;
-            }
-            return false;
+            for(; i < elements.size() && !filter.test(elements.get(i)); i++);
+            return i < elements.size();
         }
 
         @Override
         public T next() {
             if(hasNext()){
-                T element = elements[i];
+                T element = elements.get(i);
                 i++;
                 return element;
             }
@@ -62,7 +57,7 @@ public class IterableWithPolicyImpl<T> implements IterableWithPolicy<T>{
     }
 
     @Override
-    public void setIterationPolicy(Predicate<T> filter) {
+    public void setIterationPolicy(final Predicate<T> filter) {
         this.filter = filter;
     }
 }
